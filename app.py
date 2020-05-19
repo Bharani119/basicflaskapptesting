@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from datetime import datetime
 import pandas as pd
+import numpy as np
 import pickle
 app = Flask(__name__)
 
@@ -20,11 +21,12 @@ def result():
         to_predict_list = request.form.to_dict()
         to_predict_list = list(to_predict_list.values())
         to_predict_list = list(map(int, to_predict_list))
-        data_df = pd.DataFrame.from_dict(to_predict_list)
+        to_predict = np.array(to_predict_list).reshape(1, 4)
+        # data_df = pd.DataFrame.from_dict(to_predict_list)
 
         # predictions
-        result = model.predict(data_df)
-        return render_template("result.html", prediction=result)
+        result = model.predict(to_predict)
+        return render_template("result.html", prediction=result[0])
 
 
 if __name__ == '__main__':
