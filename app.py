@@ -26,7 +26,11 @@ def result():
 
         # predictions
         result = model.predict(to_predict)
-        return render_template("result.html", prediction=result[0])
+        if int(result)== 1:
+            prediction ='Congrats you will survive'
+        else:
+            prediction ='Sorry see you in Hell or Heaven'
+        return render_template("result.html", prediction = prediction)
 
 
 if __name__ == '__main__':
